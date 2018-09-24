@@ -8,6 +8,7 @@ export default class AuthService {
     this.login = this.login.bind(this);
     this.getProfile = this.getProfile.bind(this);
 
+
   }
 
   login(username,password){
@@ -41,12 +42,14 @@ export default class AuthService {
     {
       header['Authorization'] = `Bearer ${this.getToken()}`
     }
+
+
     return fetch(url,{
       header,
         ...options
-    })
-      .then(this._checkStatus)
-      .then(response => response.json())
+    }).then(data => data.json())
+      .then(data => data);
+
   }
 
   getToken(){
@@ -84,8 +87,9 @@ export default class AuthService {
   }
 
   _checkStatus(response){
-    if(response.status >= 200 && response.status < 300)
+    if(response.status >= 200 && response.status < 300){
       return response;
+    }
     else{
       var error = new Error(response.statusText);
       error.response = response;
