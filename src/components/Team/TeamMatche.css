@@ -1,0 +1,11 @@
+.Victoire {
+    background: #ebffec
+}
+.Defaite {
+    background: #ffebeb
+}
+@media screen and (max-width: 480px){
+    .hidden_mobile{
+        display: none !important;
+    }
+}

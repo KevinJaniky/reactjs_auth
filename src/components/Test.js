@@ -1,8 +1,8 @@
 //Request test
 
 import React, {Component} from "react";
-import AuthService from "./AuthService";
-import withAuth from "./withAuth";
+import AuthService from "./Auth/AuthService";
+import withAuth from "./Auth/withAuth";
 const Auth = new AuthService();
 
 class Test extends Component{
@@ -11,7 +11,7 @@ class Test extends Component{
     super();
     this.state = {
       hits : []
-    }
+    };
     this.getData = this.getData.bind(this);
   }
 

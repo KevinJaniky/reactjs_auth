@@ -7,7 +7,7 @@ export default class AuthService {
     this.fetch = this.fetch.bind(this);
     this.login = this.login.bind(this);
     this.getProfile = this.getProfile.bind(this);
-
+ 
 
   }
 
@@ -15,13 +15,12 @@ export default class AuthService {
     return this.fetch(`${this.domain}/oauth/token`, {
       method: "POST",
       headers:{
-        "Access-Control-Allow-Origin":"http://127.0.0.1:8000",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
         username: username,
         password: password,
-        client_secret : "FyIKZb0zXQMkbEk1GaMqI3beX0qeEIWwiHcu3vvC",
+        client_secret : "HzZ44j1xL3JkUSD9GLbDbAwrsepLZReJETwOUpo3",
         grant_type: "password",
         client_id: 2,
         remember_me: false
@@ -29,6 +28,8 @@ export default class AuthService {
     }).then( res => {
       this.setToken(res.access_token);
       return Promise.resolve(res);
+    }).catch(e => {
+      console.warn(e);
     })
   }
 
