@@ -12,6 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import AuthService from '../Auth/AuthService';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+
 const Auth = new AuthService();
 const styles = theme => ({
   root: {
@@ -22,11 +23,11 @@ const styles = theme => ({
 });
 
 const margin = {
-  margin:'auto'
+  margin: 'auto'
 };
 
 const padd = {
-  padding:'25px'
+  padding: '25px'
 };
 
 const width = {
@@ -36,33 +37,33 @@ const width = {
 
 class TeamForm extends React.Component {
 
-  constructor(){
+  constructor() {
     super();
     this.state = {
-      j1:'',
-      j2:'',
-      hits:[
-        {id:0,name:'None'},
-        {id:1,name:'None'},
+      j1: '',
+      j2: '',
+      hits: [
+        {id: 0, name: 'None'},
+        {id: 1, name: 'None'},
       ]
     }
     this.handleFormOnSubmit = this.handleFormOnSubmit.bind(this);
   }
+
   componentWillMount() {
     this.getData();
   }
 
-  handleFormOnSubmit(){
-
+  handleFormOnSubmit() {
   }
 
   getData() {
-    fetch('http://127.0.0.1:8000/api/user', {
+    fetch('http://127.0.0.1:8001/api/user', {
       methods: "GET",
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://127.0.0.1:8000",
+        "Access-Control-Allow-Origin": "http://127.0.0.1:8001",
         "Authorization": `Bearer ${Auth.getToken()}`
       }
     }).then(response => response.json())
@@ -71,71 +72,94 @@ class TeamForm extends React.Component {
       })
   }
 
+  pushData() {
+    fetch('http://127.0.0.1:8001/api/team', {
+      methods: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://127.0.0.1:8001",
+        "Authorization": `Bearer ${Auth.getToken()}`
+      },
+      body: JSON.stringify({
+        name: this.state.name,
+        uid_1: this.state.j1,
+        uid_2: this.state.j2,
+      })
+    }).then(response => response.json())
+      .then(data => {
+        console.log(this.state);
+
+      })
+  }
+
   handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({[event.target.name]: event.target.value});
+
   };
 
   render() {
     const {classes} = this.props;
+
     return (
       <React.Fragment>
-        <CssBaseline />
-        <Grid container spacing={24} >
+        <CssBaseline/>
+        <Grid container spacing={24}>
           <Grid item xs={12} md={6} style={margin}>
             <Paper className={classes.paper} style={padd}>
               <Typography variant="title" gutterBottom>
                 Créer une équipe
               </Typography>
-            <form className={classes.form} onSubmit={this.handleFormOnSubmit}>
-              <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="nom">Nom</InputLabel>
-                <Input id="nom" name="name" autoComplete="nom" autoFocus onChange={this.handleChange}/>
-              </FormControl>
+              <form className={classes.form} onSubmit={this.handleFormOnSubmit}>
+                <FormControl margin="normal" required fullWidth>
+                  <InputLabel htmlFor="nom">Nom</InputLabel>
+                  <Input id="nom" name="name" autoComplete="nom" autoFocus onChange={this.handleChange}/>
+                </FormControl>
 
-              <FormControl required className={classes.formControl} style={width}>
-                <InputLabel htmlFor="j1">Joueur 1</InputLabel>
-                <Select
-                  value={this.state.j1}
-                  onChange={this.handleChange}
-                  inputProps={{
-                    name: 'j1',
-                    id: 'j1',
-                  }}
+                <FormControl required className={classes.formControl} style={width}>
+                  <InputLabel htmlFor="j1">Joueur 1</InputLabel>
+                  <Select
+                    value={this.state.j1}
+                    onChange={this.handleChange}
+                    inputProps={{
+                      name: 'j1',
+                      id: 'j1',
+                    }}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {this.state.hits.map(d =>
+                      <MenuItem value={d.id}>{d.name}</MenuItem>)}
+                  </Select>
+                </FormControl>
+                <FormControl className={classes.formControl} style={width}>
+                  <InputLabel htmlFor="j2">Joueur 2</InputLabel>
+                  <Select
+                    value={this.state.j2}
+                    onChange={this.handleChange}
+                    inputProps={{
+                      name: 'j2',
+                      id: 'j2',
+                    }}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {this.state.hits.map(d =>
+                      <MenuItem value={d.id}>{d.name}</MenuItem>)}
+                  </Select>
+                </FormControl>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="raised"
+                  color="primary"
+                  className={classes.submit}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {this.state.hits.map(d =>
-                    <MenuItem value={d.id}>{d.name}</MenuItem>)}
-                </Select>
-              </FormControl>
-              <FormControl  className={classes.formControl} style={width}>
-                <InputLabel htmlFor="j2">Joueur 2</InputLabel>
-                <Select
-                  value={this.state.j2}
-                  onChange={this.handleChange}
-                  inputProps={{
-                    name: 'j2',
-                    id: 'j2',
-                  }}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {this.state.hits.map(d =>
-                    <MenuItem value={d.id}>{d.name}</MenuItem>)}
-                </Select>
-              </FormControl>
-              <Button
-                type="submit"
-                fullWidth
-                variant="raised"
-                color="primary"
-                className={classes.submit}
-              >
-                Créer
-              </Button>
-            </form>
+                  Créer
+                </Button>
+              </form>
             </Paper>
           </Grid>
         </Grid>

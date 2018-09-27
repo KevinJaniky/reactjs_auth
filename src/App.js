@@ -19,6 +19,7 @@ import { BrowserRouter as Router,Switch, Route } from 'react-router-dom'
 import Teams from './components/Team/Teams';
 import TeamProfil from "./components/Team/TeamProfil";
 import TeamForm from "./components/Team/TeamForm";
+import Home from "./components/Home/Home";
 
 
 
@@ -103,7 +104,8 @@ class App extends React.Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
+    const  {classes} = this.props;
+    const  {theme} = this.props;
 
     return (
       <div className={classes.root}>
@@ -144,7 +146,7 @@ class App extends React.Component {
           <div className={classes.toolbar} />
           <Switch>
             <div>
-              <Route exact path="/" component={App}/>
+              <Route exact path="/" component={Home}/>
               <Route exact path="/teams" component={Teams}/>
               <Route exact path="/create/teams" component={TeamForm}/>
               <Route exact path="/teams/:id/" component={TeamProfil}/>

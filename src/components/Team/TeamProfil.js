@@ -36,12 +36,12 @@ class TeamProfil extends React.Component {
     this.getData();
   }
   getData() {
-    fetch('http://127.0.0.1:8000/api/team/' + this.props.match.params.id, {
+    fetch('http://127.0.0.1:8001/api/team/' + this.props.match.params.id, {
       methods: "GET",
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://127.0.0.1:8000",
+        "Access-Control-Allow-Origin": "http://127.0.0.1:8001",
         "Authorization": `Bearer ${Auth.getToken()}`
       }
     }).then(response => response.json())

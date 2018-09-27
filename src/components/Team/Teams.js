@@ -53,7 +53,7 @@ class Teams extends Component {
         <div className="Teams">
           <Grid container spacing={24}>
             {this.state.hits.map(d =>
-              <Grid item xs={6} sm={3}><TeamCard name={d.name} user1={d.username_1} user2={d.username_2} id={d.id}/></Grid>)}
+              <Grid item xs={12} sm={6} md={3}><TeamCard name={d.name} user1={d.username_1} user2={d.username_2} id={d.id}/></Grid>)}
           </Grid>
           <Button variant="fab" color="primary" aria-label="Add" style={fabStyle} onClick={this.handleClick}>
             <AddIcon/>
@@ -64,12 +64,12 @@ class Teams extends Component {
   }
 
   getData() {
-    fetch('http://127.0.0.1:8000/api/team', {
+    fetch('http://127.0.0.1:8001/api/team', {
       methods: "GET",
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://127.0.0.1:8000",
+        "Access-Control-Allow-Origin": "http://127.0.0.1:8001",
         "Authorization": `Bearer ${Auth.getToken()}`
       }
     }).then(response => response.json())

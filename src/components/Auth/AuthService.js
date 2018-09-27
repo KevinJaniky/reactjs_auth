@@ -3,7 +3,7 @@ import decode from "jwt-decode";
 export default class AuthService {
 
   constructor(domain){
-    this.domain = domain || "http://127.0.0.1:8000";
+    this.domain = domain || "http://127.0.0.1:8001";
     this.fetch = this.fetch.bind(this);
     this.login = this.login.bind(this);
     this.getProfile = this.getProfile.bind(this);
@@ -37,7 +37,7 @@ export default class AuthService {
     const header = {
       "Accept":"application/json",
       "Content-Type":"application/json",
-      "Access-Control-Allow-Origin":"http://127.0.0.1:8000"
+      "Access-Control-Allow-Origin":"http://127.0.0.1:8001"
     };
     if(this.loggedIn())
     {
